@@ -4,6 +4,7 @@ namespace App\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use App\Domain\Products\Commands\ImportProducts;
 
 class Kernel extends ConsoleKernel
 {
@@ -14,6 +15,10 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')->hourly();
     }
+
+    protected $commands = [
+        ImportProducts::class, // Registra o comando
+    ];
 
     /**
      * Register the commands for the application.
