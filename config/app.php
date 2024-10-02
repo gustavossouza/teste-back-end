@@ -168,6 +168,16 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+
+
+        // DOMAIN
+        App\Domain\Categories\Providers\RouteServiceProvider::class,        
+        App\Domain\Login\Providers\RouteServiceProvider::class,
+        App\Domain\Products\Providers\RouteServiceProvider::class,
+        App\Domain\Users\Providers\RouteServiceProvider::class,
+
+
+
     ])->toArray(),
 
     /*
