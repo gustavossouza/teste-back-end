@@ -34,7 +34,7 @@ services:
       POSTGRES_PASSWORD: teste#@
       POSTGRES_DB: teste
     volumes:
-      - ./docker/pgdata:/var/lib/postgresql/data
+      - ./.docker/pgdata:/var/lib/postgresql/data
     ports:
       - "5432:5432"
 
