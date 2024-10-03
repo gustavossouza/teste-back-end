@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Collection;
 class GlobalRepositories
 {
     public function __construct(
-        private Model $entity
+        protected Model $entity
     )
     {}
 

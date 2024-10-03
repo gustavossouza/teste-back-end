@@ -11,4 +11,11 @@ class UsersRepository extends GlobalRepositories
     {
         parent::__construct($users);
     }
+
+    public function getByEmail(string $email): ?Users
+    {
+        return $this->entity
+            ->where('email', $email)
+            ->first();
+    }
 }
