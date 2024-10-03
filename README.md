@@ -89,7 +89,7 @@ php artisan migrate
 
 Se preferir rodar o comando para importar os produtos, você pode utilizar o comando Artisan disponível em:
 
-Localização: /app/Domain/Products/Commands
+*Localização*: /app/Domain/Products/Commands
 
 Para importar todos os produtos:
 
