@@ -94,6 +94,11 @@ Agora, abra o navegador e acesse a aplicação em:
 http://localhost
 ```
 
-### Conclusão:
+### Conclusão
 
-Esse arquivo **README.md** agora está formatado corretamente em **Markdown** e pronto para ser usado no seu repositório. Se precisar de mais alguma coisa, estou à disposição!
+Agradeço por conferir o projeto! Se precisar de mais alguma coisa, estou à disposição.
+
+**Gustavo Henrique Santos**
+
+Conecte-se comigo no [LinkedIn](https://www.linkedin.com/in/gustavohssouza/).
+
