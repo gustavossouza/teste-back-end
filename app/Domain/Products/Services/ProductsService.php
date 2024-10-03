@@ -4,13 +4,16 @@ namespace App\Domain\Products\Services;
 
 use App\Domain\Supports\Services\GlobalServices;
 use App\Domain\Products\Repositories\ProductsRepository;
+use App\Domain\Categories\Services\CategoriesService;
 use Illuminate\Database\Eloquent\Collection;
 use App\Domain\Products\Entities\Products;
+use Log;
 
 class ProductsService extends GlobalServices
 {
     public function __construct(
-        protected ProductsRepository $repository
+        protected ProductsRepository $repository,
+        protected CategoriesService $categoriesService,
     )
     {}
 
@@ -43,7 +46,7 @@ class ProductsService extends GlobalServices
 
     public function create(array $data): Products
     {
-        if ($this->isDuplicate(['name' => $data['name']])) {
+        if ($this->isDuplicate(['title' => $data['title']])) {
             throw new \Exception('Este nome de produto já está em uso.');
         }
 
@@ -52,10 +55,27 @@ class ProductsService extends GlobalServices
 
     public function update(array $data, int $productId): Products
     {
-        if ($this->isDuplicate(['name' => $data['name']])) {
+        if ($this->isDuplicate(['title' => $data['title']])) {
             throw new \Exception('Este nome já está em uso.');
         }
 
         return parent::update($data, $productId);
+    }
+
+    public function import(array $products): void
+    {
+        foreach ($products as $product) {
+            try {
+                $category = $this->categoriesService->findOrCreateByName($product['category']);
+                $product['category_id'] = $category->id;
+                $this->create($product);
+
+            } catch (\Exception $e) {
+                Log::error('Erro ao importar o produto: ' . $product['title'], [
+                    'exception' => $e->getMessage(),
+                ]);
+            }
+            
+        }
     }
 }

@@ -11,4 +11,11 @@ class CategoriesRepository extends GlobalRepositories
     {
         parent::__construct($categories);
     }
+
+    public function getByName(string $name): ?Categories
+    {
+        return $this->entity
+            ->where('name', $name)
+            ->first();
+    }
 }

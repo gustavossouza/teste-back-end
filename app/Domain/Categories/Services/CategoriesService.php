@@ -30,4 +30,15 @@ class CategoriesService extends GlobalServices
 
         return parent::update($data, $categoryId);
     }
+
+    public function findOrCreateByName(string $name): Categories
+    {
+        $category = $this->repository->getByName($name);
+        if (is_null($category)) {
+            $category = $this->create([
+                'name' => $name
+            ]);
+        }
+        return $category;
+    }
 }
