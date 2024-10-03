@@ -4,6 +4,7 @@ namespace App\Domain\Supports\Repositories;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Builder;
 
 class GlobalRepositories
 {
@@ -11,6 +12,11 @@ class GlobalRepositories
         protected Model $entity
     )
     {}
+
+    public function query(): Builder
+    {
+        return $this->entity->newQuery();
+    }
 
     public function get(): Collection
     {

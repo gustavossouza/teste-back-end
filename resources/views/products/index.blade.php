@@ -175,6 +175,70 @@
 
                     <!-- Page Heading -->
                     <h1 class="h3 mb-2 text-gray-800">Listagem Produtos</h1>
+
+                    <div class="card shadow mb-4">
+        <div class="card-header">
+            <h6 class="m-0 font-weight-bold text-primary">Filtros</h6>
+        </div>
+        <div class="card-body">
+        <form action="{{ route('products.index') }}" method="GET">
+    <div class="row">
+        <!-- Campo ID Produto -->
+        <div class="col-md-3">
+            <div class="form-group">
+                <label for="product_id">ID Produto</label>
+                <input type="text" name="product_id" id="product_id" class="form-control" 
+                       placeholder="Digite o ID do produto" value="{{ request('product_id') }}">
+            </div>
+        </div>
+
+        <!-- Campo Nome -->
+        <div class="col-md-3">
+            <div class="form-group">
+                <label for="name">Nome</label>
+                <input type="text" name="name" id="name" class="form-control" 
+                       placeholder="Digite o nome do produto" value="{{ request('name') }}">
+            </div>
+        </div>
+
+        <!-- Select Categorias -->
+        <div class="col-md-3">
+            <div class="form-group">
+                <label for="category">Categorias</label>
+                <select name="category" id="category" class="form-control">
+                    <option value="">Selecione uma categoria</option>
+                    @foreach($categories as $category)
+                        <option value="{{ $category['id'] }}" {{ request('category') == $category['id'] ? 'selected' : '' }}>
+                            {{ $category['name'] }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
+        </div>
+
+        <!-- Select Com/sem imagem -->
+        <div class="col-md-3">
+            <div class="form-group">
+                <label for="image_filter">Imagem</label>
+                <select name="image_filter" id="image_filter" class="form-control">
+                    <option value="">Selecione uma opção</option>
+                    <option value="with_image" {{ request('image_filter') == 'with_image' ? 'selected' : '' }}>Com imagem</option>
+                    <option value="without_image" {{ request('image_filter') == 'without_image' ? 'selected' : '' }}>Sem imagem</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <!-- Botão de Filtrar -->
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Filtrar</button>
+        <a href="{{ route('products.index') }}" class="btn btn-secondary">Limpar filtros</a>
+    </div>
+</form>
+
+        </div>
+    </div>
+
                     <p class="mb-4">
 
                     <!-- DataTales Example -->

@@ -7,13 +7,16 @@ use Illuminate\Support\Facades\Http;
 
 class ProductsController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $response = Http::get('nginx/api/products');
+        $queryParams = $request->all();
+        $response = Http::get('nginx/api/products', $queryParams);
+        $responseCategories = Http::get('nginx/api/categories');
 
         if ($response->successful()) {
             $products = $response->json()['data'];
-            return view('products.index', compact('products'));
+            $categories = $responseCategories->json()['data'];
+            return view('products.index', compact('products', 'categories', 'queryParams'));
         }
         return view('products.index');
     }

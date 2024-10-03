@@ -15,11 +15,11 @@ class ProductsController extends Controller
     )
     {}
 
-    public function index(): JsonResponse
+    public function index(Request $request): JsonResponse
     {
         try {
             return response()->json([
-                'data' => $this->service->get()
+                'data' => $this->service->get($request->all())
             ], Response::HTTP_OK);
             
         } catch (\Exception $e) {

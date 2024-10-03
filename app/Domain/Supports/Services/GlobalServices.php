@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class GlobalServices
 {
-    public function get(): Collection
+    public function get(array $filters = []): Collection
     {
         return $this->repository->get();
     }
