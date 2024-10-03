@@ -47,7 +47,7 @@ class UsersController extends Controller
     public function store(Request $request): JsonResponse
     {
         try {
-            $request->validate([
+            $validatedData = $request->validate([
                 'name' => 'required',
                 'email' => 'required',
                 'cellphone' => 'required',
@@ -65,12 +65,7 @@ class UsersController extends Controller
                 'password' => Hash::make($request->password)
             ]);
 
-            $this->service->create($request->only([
-                'name',
-                'email',
-                'cellphone',
-                'password',
-            ]));
+            $this->service->create($validatedData);
 
             return response()->json([
                 'data' => 'Created'
@@ -86,7 +81,7 @@ class UsersController extends Controller
     public function update(Request $request, int $userId): JsonResponse
     {
         try {
-            $request->validate([
+            $validatedData = $request->validate([
                 'name' => 'required',
                 'email' => 'required',
                 'cellphone' => 'required',
@@ -96,7 +91,7 @@ class UsersController extends Controller
             $duplicate = $this->service->isDuplicate([
                 'email' => $request->email
             ], $userId);
-            
+
             if ($duplicate) {
                 throw new \Exception('Este email já está em uso. Por favor, escolha um nome diferente.');
             }
@@ -105,12 +100,7 @@ class UsersController extends Controller
                 'password' => Hash::make($request->password)
             ]);
 
-            $this->service->update($request->only([
-                'name',
-                'email',
-                'cellphone',
-                'password',
-            ]), $userId);
+            $this->service->update($validatedData, $userId);
 
             return response()->json([
                 'data' => 'Updated'

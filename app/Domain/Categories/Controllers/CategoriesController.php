@@ -46,7 +46,7 @@ class CategoriesController extends Controller
     public function store(Request $request): JsonResponse
     {
         try {
-            $request->validate([
+            $validatedData = $request->validate([
                 'name' => 'required'
             ]);
             $name = $request->name;
@@ -57,9 +57,7 @@ class CategoriesController extends Controller
                 throw new \Exception('Este nome já está em uso. Por favor, escolha um nome diferente.');
             }
 
-            $this->service->create($request->only([
-                'name'
-            ]));
+            $this->service->create($validatedData);
 
             return response()->json([
                 'data' => 'Created'
@@ -75,21 +73,20 @@ class CategoriesController extends Controller
     public function update(Request $request, int $categoryId): JsonResponse
     {
         try {
-            $request->validate([
+            $validatedData = $request->validate([
                 'name' => 'required'
             ]);
+
             $name = $request->name;
             $duplicate = $this->service->isDuplicate([
                 'name' => $name
             ], $categoryId);
-            
+
             if ($duplicate) {
                 throw new \Exception('Este nome já está em uso. Por favor, escolha um nome diferente.');
             }
 
-            $this->service->update($request->only([
-                'name'
-            ]), $categoryId);
+            $this->service->update($validatedData, $categoryId);
 
             return response()->json([
                 'data' => 'Updated'

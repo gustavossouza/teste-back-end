@@ -46,12 +46,13 @@ class ProductsController extends Controller
     public function store(Request $request): JsonResponse
     {
         try {
-            $request->validate([
+            $validatedData = $request->validate([
                 'name' => 'required',
                 'price' => 'required|numeric',
                 'description' => 'required|string',
                 'category_id' => 'required|exists:categories,id',
             ]);
+            
             $name = $request->name;
             $duplicate = $this->service->isDuplicate([
                 'name' => $name
@@ -60,13 +61,7 @@ class ProductsController extends Controller
                 throw new \Exception('Este nome já está em uso. Por favor, escolha um nome diferente.');
             }
 
-            $this->service->create($request->only([
-                'name',
-                'price',
-                'description',
-                'category_id',
-                'image_url',
-            ]));
+            $this->service->create($validatedData);
 
             return response()->json([
                 'data' => 'Created'
@@ -82,7 +77,7 @@ class ProductsController extends Controller
     public function update(Request $request, int $productId): JsonResponse
     {
         try {
-            $request->validate([
+            $$validatedData = $request->validate([
                 'name' => 'required',
                 'price' => 'required|numeric',
                 'description' => 'required|string',
@@ -92,18 +87,12 @@ class ProductsController extends Controller
             $duplicate = $this->service->isDuplicate([
                 'name' => $name
             ], $productId);
-            
+
             if ($duplicate) {
                 throw new \Exception('Este nome já está em uso. Por favor, escolha um nome diferente.');
             }
 
-            $this->service->update($request->only([
-                'name',
-                'price',
-                'description',
-                'category_id',
-                'image_url',
-            ]), $productId);
+            $this->service->update($validatedData, $productId);
 
             return response()->json([
                 'data' => 'Updated'
