@@ -85,8 +85,25 @@ Execute as migrações para preparar o banco de dados:
 ```bash
 php artisan migrate
 ```
+### 7. Importar/Sincronizar Produtos
 
-### 7. Acessar o Projeto
+Se preferir rodar o comando para importar os produtos, você pode utilizar o comando Artisan disponível em:
+
+Localização: /app/Domain/Products/Commands
+
+Para importar todos os produtos:
+
+```bash
+php artisan import:product
+```
+
+Ou para importar um produto específico pelo seu ID
+
+```bash
+php artisan import:product --id=10
+```
+
+### 8. Acessar o Projeto
 
 Agora, abra o navegador e acesse a aplicação em:
 
