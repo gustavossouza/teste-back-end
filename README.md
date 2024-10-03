@@ -44,6 +44,7 @@ No terminal, vá até o diretório onde deseja clonar o projeto e execute:
 ```bash
 git clone https://github.com/gustavossouza/teste-back-end.git
 cd teste-back-end
+```
 
 ### 2. Subindo os Contêineres Docker
 
@@ -53,17 +54,21 @@ Inicie os contêineres:
 
 ```bash
 docker-compose up -d
+```
 
 ### 3. Instalar Dependências
 
 Dentro do contêiner, execute:
+
 ```bash
 composer install
+```
 
 ### 4. Configurar o Ambiente
 
 ```bash
 mv .env-example .env
+```
 
 ### 5. Gerar a Chave da Aplicação
 
@@ -71,6 +76,7 @@ Execute o seguinte comando para gerar uma nova chave para a aplicação:
 
 ```bash
 php artisan key:generate
+```
 
 ### 6. Executar Migrações
 
@@ -78,12 +84,15 @@ Execute as migrações para preparar o banco de dados:
 
 ```bash
 php artisan migrate
+```
 
 ### 7. Acessar o Projeto
 
 Agora, abra o navegador e acesse a aplicação em:
 
+```bash
 http://localhost
+```
 
 ### Conclusão:
 
