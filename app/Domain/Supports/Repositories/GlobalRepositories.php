@@ -60,10 +60,14 @@ class GlobalRepositories
         return $model;
     }
 
-    public function hasDuplicateInColumn(array $columnsValue): bool
+    public function hasDuplicateInColumn(array $columnsValue, ?int $excludeId = null): bool
     {
-        return $this->entity
-            ->where($columnsValue)
-            ->exists();
+        $query = $this->entity->where($columnsValue);
+    
+        if ($excludeId !== null) {
+            $query->where('id', '!=', $excludeId);  // Exclui o registro atual da verificação, se fornecido
+        }
+        
+        return $query->exists();
     }
 }

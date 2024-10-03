@@ -91,7 +91,8 @@ class ProductsController extends Controller
             $name = $request->name;
             $duplicate = $this->service->isDuplicate([
                 'name' => $name
-            ]);
+            ], $productId);
+            
             if ($duplicate) {
                 throw new \Exception('Este nome já está em uso. Por favor, escolha um nome diferente.');
             }

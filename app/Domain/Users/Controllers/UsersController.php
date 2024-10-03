@@ -83,7 +83,7 @@ class UsersController extends Controller
         }
     }
 
-    public function update(Request $request, int $categoryId): JsonResponse
+    public function update(Request $request, int $userId): JsonResponse
     {
         try {
             $request->validate([
@@ -95,7 +95,8 @@ class UsersController extends Controller
 
             $duplicate = $this->service->isDuplicate([
                 'email' => $request->email
-            ]);
+            ], $userId);
+            
             if ($duplicate) {
                 throw new \Exception('Este email já está em uso. Por favor, escolha um nome diferente.');
             }
