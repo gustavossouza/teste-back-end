@@ -7,6 +7,7 @@ use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
 use App\Domain\Categories\Services\CategoriesService;
 use Illuminate\Http\JsonResponse;
+use App\Domain\Categories\FormRequest\CategoriesRequest;
 
 class CategoriesController extends Controller
 {
@@ -43,21 +44,10 @@ class CategoriesController extends Controller
         }
     }
 
-    public function store(Request $request): JsonResponse
+    public function store(CategoriesRequest $request): JsonResponse
     {
         try {
-            $validatedData = $request->validate([
-                'name' => 'required'
-            ]);
-            $name = $request->name;
-            $duplicate = $this->service->isDuplicate([
-                'name' => $name
-            ]);
-            if ($duplicate) {
-                throw new \Exception('Este nome já está em uso. Por favor, escolha um nome diferente.');
-            }
-
-            $this->service->create($validatedData);
+            $this->service->create($request->validated());
 
             return response()->json([
                 'data' => 'Created'
@@ -70,23 +60,10 @@ class CategoriesController extends Controller
         }
     }
 
-    public function update(Request $request, int $categoryId): JsonResponse
+    public function update(CategoriesRequest $request, int $categoryId): JsonResponse
     {
         try {
-            $validatedData = $request->validate([
-                'name' => 'required'
-            ]);
-
-            $name = $request->name;
-            $duplicate = $this->service->isDuplicate([
-                'name' => $name
-            ], $categoryId);
-
-            if ($duplicate) {
-                throw new \Exception('Este nome já está em uso. Por favor, escolha um nome diferente.');
-            }
-
-            $this->service->update($validatedData, $categoryId);
+            $this->service->update($request->validated(), $categoryId);
 
             return response()->json([
                 'data' => 'Updated'

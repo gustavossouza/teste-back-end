@@ -7,6 +7,7 @@ use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
 use App\Domain\Products\Services\ProductsService;
 use Illuminate\Http\JsonResponse;
+use App\Domain\Products\Formrequest\ProductsRequest;
 
 class ProductsController extends Controller
 {
@@ -43,25 +44,10 @@ class ProductsController extends Controller
         }
     }
 
-    public function store(Request $request): JsonResponse
+    public function store(ProductsRequest $request): JsonResponse
     {
         try {
-            $validatedData = $request->validate([
-                'name' => 'required',
-                'price' => 'required|numeric',
-                'description' => 'required|string',
-                'category_id' => 'required|exists:categories,id',
-            ]);
-            
-            $name = $request->name;
-            $duplicate = $this->service->isDuplicate([
-                'name' => $name
-            ]);
-            if ($duplicate) {
-                throw new \Exception('Este nome já está em uso. Por favor, escolha um nome diferente.');
-            }
-
-            $this->service->create($validatedData);
+            $this->service->create($request->validated());
 
             return response()->json([
                 'data' => 'Created'
@@ -74,25 +60,10 @@ class ProductsController extends Controller
         }
     }
 
-    public function update(Request $request, int $productId): JsonResponse
+    public function update(ProductsRequest $request, int $productId): JsonResponse
     {
         try {
-            $$validatedData = $request->validate([
-                'name' => 'required',
-                'price' => 'required|numeric',
-                'description' => 'required|string',
-                'category_id' => 'required|exists:categories,id',
-            ]);
-            $name = $request->name;
-            $duplicate = $this->service->isDuplicate([
-                'name' => $name
-            ], $productId);
-
-            if ($duplicate) {
-                throw new \Exception('Este nome já está em uso. Por favor, escolha um nome diferente.');
-            }
-
-            $this->service->update($validatedData, $productId);
+            $this->service->update($request->validated(), $productId);
 
             return response()->json([
                 'data' => 'Updated'

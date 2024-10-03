@@ -7,7 +7,7 @@ use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
 use App\Domain\Users\Services\UsersService;
 use Illuminate\Http\JsonResponse;
-use Hash;
+use App\Domain\Users\FormRequest\UsersRequest;
 
 class UsersController extends Controller
 {
@@ -44,29 +44,12 @@ class UsersController extends Controller
         }
     }
 
-    public function store(Request $request): JsonResponse
+    public function store(UsersRequest $request): JsonResponse
     {
         try {
-            $validatedData = $request->validate([
-                'name' => 'required',
-                'email' => 'required',
-                'cellphone' => 'required',
-                'password' => 'required',
-            ]);
+            $data = $request->validated();
 
-            $duplicate = $this->service->isDuplicate([
-                'email' => $request->email
-            ]);
-            if ($duplicate) {
-                throw new \Exception('Este email já está em uso. Por favor, escolha um nome diferente.');
-            }
-
-            $request->merge([
-                'password' => Hash::make($request->password)
-            ]);
-
-            $this->service->create($validatedData);
-
+            $this->service->create($data);
             return response()->json([
                 'data' => 'Created'
             ], Response::HTTP_OK);
@@ -78,29 +61,11 @@ class UsersController extends Controller
         }
     }
 
-    public function update(Request $request, int $userId): JsonResponse
+    public function update(UsersRequest $request, int $userId): JsonResponse
     {
         try {
-            $validatedData = $request->validate([
-                'name' => 'required',
-                'email' => 'required',
-                'cellphone' => 'required',
-                'password' => 'required',
-            ]);
-
-            $duplicate = $this->service->isDuplicate([
-                'email' => $request->email
-            ], $userId);
-
-            if ($duplicate) {
-                throw new \Exception('Este email já está em uso. Por favor, escolha um nome diferente.');
-            }
-
-            $request->merge([
-                'password' => Hash::make($request->password)
-            ]);
-
-            $this->service->update($validatedData, $userId);
+            $data = $request->validated();
+            $this->service->update($data, $userId);
 
             return response()->json([
                 'data' => 'Updated'

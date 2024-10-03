@@ -5,6 +5,7 @@ namespace App\Domain\Products\Services;
 use App\Domain\Supports\Services\GlobalServices;
 use App\Domain\Products\Repositories\ProductsRepository;
 use Illuminate\Database\Eloquent\Collection;
+use App\Domain\Products\Entities\Products;
 
 class ProductsService extends GlobalServices
 {
@@ -38,5 +39,23 @@ class ProductsService extends GlobalServices
         }
 
         return $query->get();
+    }
+
+    public function create(array $data): Products
+    {
+        if ($this->isDuplicate(['name' => $data['name']])) {
+            throw new \Exception('Este nome de produto já está em uso.');
+        }
+
+        return parent::create($data);
+    }
+
+    public function update(array $data, int $productId): Products
+    {
+        if ($this->isDuplicate(['name' => $data['name']])) {
+            throw new \Exception('Este nome já está em uso.');
+        }
+
+        return parent::update($data, $productId);
     }
 }
