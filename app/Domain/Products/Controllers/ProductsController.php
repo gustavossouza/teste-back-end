@@ -29,11 +29,33 @@ class ProductsController extends Controller
         }
     }
 
-    public function create(Request $request): JsonResponse
+    public function store(Request $request): JsonResponse
     {
         try {
+            $request->validate([
+                'name' => 'required',
+                'price' => 'required|numeric',
+                'description' => 'required|string',
+                'category_id' => 'required|exists:categories,id',
+            ]);
+            $name = $request->name;
+            $duplicate = $this->service->isDuplicate([
+                'name' => $name
+            ]);
+            if ($duplicate) {
+                throw new \Exception('Este nome já está em uso. Por favor, escolha um nome diferente.');
+            }
+
+            $this->service->create($request->only([
+                'name',
+                'price',
+                'description',
+                'category_id',
+                'image_url',
+            ]));
+
             return response()->json([
-                'data' => $this->service->get()
+                'data' => 'Created'
             ], Response::HTTP_OK);
             
         } catch (\Exception $e) {
@@ -60,8 +82,10 @@ class ProductsController extends Controller
     public function destroy(int $productId): JsonResponse
     {
         try {
+            $product = $this->service->delete($productId);
+
             return response()->json([
-                'data' => $this->service->get()
+                'data' => 'Deleted'
             ], Response::HTTP_OK);
             
         } catch (\Exception $e) {

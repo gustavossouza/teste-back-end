@@ -7,6 +7,7 @@ use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
 use App\Domain\Users\Services\UsersService;
 use Illuminate\Http\JsonResponse;
+use Hash;
 
 class UsersController extends Controller
 {
@@ -29,11 +30,36 @@ class UsersController extends Controller
         }
     }
 
-    public function create(Request $request): JsonResponse
+    public function store(Request $request): JsonResponse
     {
         try {
+            $request->validate([
+                'name' => 'required',
+                'email' => 'required',
+                'cellphone' => 'required',
+                'password' => 'required',
+            ]);
+
+            $duplicate = $this->service->isDuplicate([
+                'email' => $request->email
+            ]);
+            if ($duplicate) {
+                throw new \Exception('Este email já está em uso. Por favor, escolha um nome diferente.');
+            }
+
+            $request->merge([
+                'password' => Hash::make($request->password)
+            ]);
+
+            $this->service->create($request->only([
+                'name',
+                'email',
+                'cellphone',
+                'password',
+            ]));
+
             return response()->json([
-                'data' => $this->service->get()
+                'data' => 'Created'
             ], Response::HTTP_OK);
             
         } catch (\Exception $e) {
@@ -57,11 +83,13 @@ class UsersController extends Controller
         }
     }
 
-    public function destroy(int $categoryId): JsonResponse
+    public function destroy(int $userId): JsonResponse
     {
         try {
+            $user = $this->service->delete($userId);
+
             return response()->json([
-                'data' => $this->service->get()
+                'data' => 'Deleted'
             ], Response::HTTP_OK);
             
         } catch (\Exception $e) {

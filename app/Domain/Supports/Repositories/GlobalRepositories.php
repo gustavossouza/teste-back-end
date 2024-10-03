@@ -53,4 +53,11 @@ class GlobalRepositories
         $model->delete();
         return $model;
     }
+
+    public function hasDuplicateInColumn(array $columnsValue): bool
+    {
+        return $this->entity
+            ->where($columnsValue)
+            ->exists();
+    }
 }

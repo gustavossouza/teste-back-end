@@ -29,11 +29,26 @@ class CategoriesController extends Controller
         }
     }
 
-    public function create(Request $request): JsonResponse
+    public function store(Request $request): JsonResponse
     {
         try {
+            $request->validate([
+                'name' => 'required'
+            ]);
+            $name = $request->name;
+            $duplicate = $this->service->isDuplicate([
+                'name' => $name
+            ]);
+            if ($duplicate) {
+                throw new \Exception('Este nome já está em uso. Por favor, escolha um nome diferente.');
+            }
+
+            $this->service->create($request->only([
+                'name'
+            ]));
+
             return response()->json([
-                'data' => $this->service->get()
+                'data' => 'Created'
             ], Response::HTTP_OK);
             
         } catch (\Exception $e) {
@@ -60,8 +75,12 @@ class CategoriesController extends Controller
     public function destroy(int $categoryId): JsonResponse
     {
         try {
+            // verificar se tem produto relacionado e proibir
+            
+            $category = $this->service->delete($categoryId);
+
             return response()->json([
-                'data' => $this->service->get()
+                'data' => 'Deleted'
             ], Response::HTTP_OK);
             
         } catch (\Exception $e) {
