@@ -1,88 +1,90 @@
-# Teste prático para Back-End 
-***
+# Teste
 
-Bem-vindo.
+Este projeto segue uma arquitetura baseada em **DDD (Domain-Driven Design)**, utilizando princípios de **SOLID** e padrões de design (**Design Patterns**). Está preparado para rodar em um ambiente **Docker**.
 
-Usarei esse teste para avaliar tecnicamente todas as pessoas que estão participando do nosso processo seletivo para a vaga de desenvolvedor full stack, lembrando que a aplicação de patterns como service e repository e processamento de filas assíncronas com horizon fazem diferença. O prazo de execução é de 3 dias corridos a partir do momento que o teste foi encaminhado para você, se tiver alguma duvida pergunte. O teste deve ter um read-me que explique o projeto e como rodá-lo.
+## Estrutura do Projeto
 
-## TL;DR
+- **APIs**: A lógica de APIs está organizada dentro da pasta `app/Domain`. Nesta pasta estão os serviços, repositórios e entidades, seguindo o padrão **DDD**, isolando a lógica de negócios da aplicação.
+  
+  **Localização**: `app/Domain`
+  
+- **Web Controllers**: Toda a lógica relacionada a requisições web e controladores HTTP pode ser encontrada em `app/Http/Controllers`. Esses controladores são responsáveis por interagir com o frontend ou outros consumidores da API.
 
-- Você deverá criar um comando artisan que se comunicará com uma outra API para importar em seu banco de dados;
-- Você deverá criar o front-end do CRUD (Criação, Leitura, Atualização e Deleção) no sistema de gerenciamento de biblioteca. Você poderá escolher entre utilizar React ou Blade no front-end, junto com bibliotecas de estilização como Tailwind CSS ou Bootstrap.
+  **Localização**: `app/Http/Controllers`
 
-## Começando
+## Tecnologias e Ferramentas
 
-**Faça um fork desse projeto para iniciar o desenvolvimento. PRs não serão aceitos.**
+- **PHP 7.x/8.x**
+- **Laravel** como framework base
+- **Docker** para ambiente de desenvolvimento
+- **Composer** para gerenciar dependências
+- **MySQL/PostgreSQL** ou outro banco de dados configurado via Docker
+- **Nginx** para servir a aplicação via Docker
 
-### Configuração do ambiente
+## Padrões e Arquitetura
 
-**Setup laravel conforme a documentação pode usar qualquer opção usando 'Valet, artisan serve ou docker'.**
+Este projeto segue uma série de **princípios de arquitetura** e **boas práticas**, como:
 
-### Funcionalidades a serem implementadas
+- **DDD (Domain-Driven Design)**: A lógica de negócios é encapsulada dentro do domínio (`app/Domain`), mantendo uma separação clara entre as diferentes camadas da aplicação.
+  
+- **SOLID**: O projeto foi desenvolvido seguindo os princípios de **SOLID**, garantindo que o código seja fácil de manter, estender e testar.
 
-Através da inteface o usuário deverá ser capaz de:
-- Fazer login
-- Editar dados pessoais (Email, nome, telefone...)
-- Criar categorias
-- Editar categorias
-- Criar produtos
-- Editar produtos
-- Ter uma opção de migrar produtos bem como as categorias da API que será conectada (Requisito explicado logo abaixo).
+- **Design Patterns**: Padrões de design como **Repository Pattern**, **Service Layer** e **Dependency Injection** são amplamente utilizados para manter o código limpo e modular.
 
-##### CRUD produtos
+## Pré-requisitos
 
-Aqui você deverá desenvolver as principais operações para o gerenciamento de um catálogo de produtos, sendo elas:
+Certifique-se de ter o **Docker** e o **Docker Compose** instalados em sua máquina. Se ainda não tiver instalado, consulte a [documentação oficial do Docker](https://docs.docker.com/get-docker/).
 
-- Criação
-- Atualização
-- Exclusão
+## Como Rodar o Projeto
 
-O produto deve ter a seguinte estrutura:
+### 1. Clonando o Repositório
 
-Campo       | Tipo      | Obrigatório   | Pode se repetir
------------ | :------:  | :------:      | :------:
-id          | int       | true          | false
-name        | string    | true          | false        
-price       | float     | true          | true
-decription  | text      | true          | true
-category    | string    | true          | true
-image_url   | url       | false         | true
+No terminal, vá até o diretório onde deseja clonar o projeto e execute:
 
-Os endpoints de criação e atualização devem seguir o seguinte formato de payload:
+```bash
+git clone https://github.com/gustavossouza/teste-back-end.git
+cd teste-back-end
 
-```json
-{
-    "name": "product name",
-    "price": 109.95,
-    "description": "Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit...",
-    "category": "test",
-    "image": "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg"
-}
-```
+### 2. Subindo os Contêineres Docker
 
-**Importante:** Tanto os endpoints de criação é atualização, deverão ter uma camada de validação dos campos.
+Para rodar a aplicação em contêineres Docker, siga os seguintes passos:
 
-##### Buscas de produtos
+Inicie os contêineres:
 
-Para realizar a manutenção de um catálogo de produtos é necessário que o sistema tenha algumas buscas, sendo elas:
+```bash
+docker-compose up -d
 
-- Busca pelos campos `name` e `category` (trazer resultados que batem com ambos os campos).
-- Busca por uma categoria específica.
-- Busca de produtos com e sem imagem.
-- Buscar um produto pelo seu ID único.
+### 3. Instalar Dependências
 
-##### Importação de produtos de uma API externa
+Dentro do contêiner, execute:
+```bash
+composer install
 
-É necessário que o sistema seja capaz de importar produtos que estão em um outro serviço. Deverá ser criado um comando que buscará produtos nessa API e armazenará os resultados para a sua base de dados. 
+### 4. Configurar o Ambiente
 
-Sugestão: `php artisan products:import`
+```bash
+mv .env-example .env
 
-Esse comando deverá ter uma opção de importar um único produto da API externa, que será encontrado através de um ID externo.
+### 5. Gerar a Chave da Aplicação
 
-Sugestão: `php artisan products:import --id=123`
+Execute o seguinte comando para gerar uma nova chave para a aplicação:
 
-Utilize a seguinte API para importar os produtos: [https://fakestoreapi.com/docs](https://fakestoreapi.com/docs)
+```bash
+php artisan key:generate
 
----
+### 6. Executar Migrações
 
-Se houver dúvidas, por favor, abra uma issue nesse repositório.
+Execute as migrações para preparar o banco de dados:
+
+```bash
+php artisan migrate
+
+### 7. Acessar o Projeto
+
+Agora, abra o navegador e acesse a aplicação em:
+
+http://localhost
+
+### Conclusão:
+
+Esse arquivo **README.md** agora está formatado corretamente em **Markdown** e pronto para ser usado no seu repositório. Se precisar de mais alguma coisa, estou à disposição!
