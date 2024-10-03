@@ -323,13 +323,41 @@
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-2 text-gray-800">Editar Categoria</h1>
-                    <form action="{{ route('categories.update', $category['id']) }}" method="POST">
+                    <h1 class="h3 mb-2 text-gray-800">Editar Produto</h1>
+                    <form action="{{ route('products.update', $product['id']) }}" method="POST">
                         @csrf
                         <!-- Campo Nome -->
                         <div class="form-group">
                             <label for="name">Nome</label>
-                            <input type="text" class="form-control" value="{{$category['name']??''}}" id="name" name="name" placeholder="Digite o nome" required>
+                            <input type="text" class="form-control" value="{{$product['name']??''}}" id="name" name="name" placeholder="Digite o nome" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="name">Preço</label>
+                            <input type="text" class="form-control" value="{{$product['price']??''}}" id="name" name="price" placeholder="Digite o preço" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="description">Descrição</label>
+                            <textarea name="description" id="description" class="form-control" rows="4" placeholder="Digite a descrição aqui">{{$product['description']??''}}</textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="category">Categoria</label>
+                            <select name="category_id" id="category" class="form-control">
+                                <option value="" disabled selected>Selecione uma categoria</option>
+                                @foreach($categories as $category)
+                                <option value="{{ $category['id'] }}" 
+                                    @if(isset($product) && $product['category_id'] == $category['id']) selected @endif>
+                                    {{ $category['name'] }}
+                                </option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="name">Imagem Url</label>
+                            <input type="text" class="form-control" value="{{$product['image_url']??''}}" name="image_url" placeholder="Digite o Url">
                         </div>
 
                         <!-- Botão de Enviar -->

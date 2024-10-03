@@ -323,13 +323,28 @@
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-2 text-gray-800">Editar Categoria</h1>
-                    <form action="{{ route('categories.update', $category['id']) }}" method="POST">
+                    <h1 class="h3 mb-2 text-gray-800">Editar Usuário</h1>
+                    <form action="{{ route('users.update', $user['id']) }}" method="POST">
                         @csrf
                         <!-- Campo Nome -->
                         <div class="form-group">
                             <label for="name">Nome</label>
-                            <input type="text" class="form-control" value="{{$category['name']??''}}" id="name" name="name" placeholder="Digite o nome" required>
+                            <input type="text" class="form-control" value="{{$user['name']??''}}" id="name" name="name" placeholder="Digite o nome" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="name">Email</label>
+                            <input type="text" class="form-control" value="{{$user['email']??''}}" id="name" name="email" placeholder="Digite o email" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="name">Cellphone</label>
+                            <input type="text" class="form-control" value="{{$user['cellphone']??''}}" id="name" name="cellphone" placeholder="Digite o cellphone" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="name">Password</label>
+                            <input type="password" class="form-control" id="name" name="password" placeholder="Digite o password" required>
                         </div>
 
                         <!-- Botão de Enviar -->

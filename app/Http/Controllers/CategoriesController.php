@@ -44,7 +44,13 @@ class CategoriesController extends Controller
 
     public function edit(int $id)
     {
-        return view('categories.edit');
+        $response = Http::get("nginx/api/categories/{$id}");
+
+        if ($response->successful()) {
+            $category = $response->json()['data'];
+            return view('categories.edit', compact('category'));
+        }
+        return view('categories.edit')->with('error', 'Falha ao carregar dados do usuário.');
     }
 
     public function destroy(int $id)

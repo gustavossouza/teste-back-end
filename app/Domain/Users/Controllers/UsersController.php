@@ -30,6 +30,20 @@ class UsersController extends Controller
         }
     }
 
+    public function show(int $userId): JsonResponse
+    {
+        try {
+            return response()->json([
+                'data' => $this->service->getById($userId)
+            ], Response::HTTP_OK);
+            
+        } catch (\Exception $e) {
+            return response()->json([
+                'errors' => $e->getMessage()
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+
     public function store(Request $request): JsonResponse
     {
         try {

@@ -60,7 +60,15 @@ class ProductsController extends Controller
 
     public function edit(int $id)
     {
-        return view('products.edit');
+        $response = Http::get("nginx/api/products/{$id}");
+        $responseCategories = Http::get('nginx/api/categories');
+        
+        if ($response->successful()) {
+            $product = $response->json()['data'];
+            $categories = $responseCategories->json()['data'];
+            return view('products.edit', compact('product', 'categories'));
+        }
+        return view('products.edit')->with('error', 'Falha ao carregar dados do usuário.');
     }
 
     public function destroy(int $id)

@@ -53,7 +53,13 @@ class UsersController extends Controller
 
     public function edit(int $id)
     {
-        return view('users.edit');
+        $response = Http::get("nginx/api/users/{$id}");
+
+        if ($response->successful()) {
+            $user = $response->json()['data'];
+            return view('users.edit', compact('user'));
+        }
+        return view('users.edit')->with('error', 'Falha ao carregar dados do usuário.');
     }
 
     public function destroy(int $id)
