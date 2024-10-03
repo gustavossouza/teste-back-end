@@ -53,6 +53,25 @@ class CategoriesController extends Controller
         return view('categories.edit')->with('error', 'Falha ao carregar dados do usuário.');
     }
 
+    public function update(Request $request, int $id)
+    {
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+        ]);
+
+        $name = $validatedData['name'];
+        
+        $response = Http::put("nginx/api/categories/{$id}", [
+            'name' => $name
+        ]);
+
+        if ($response->successful()) {
+            return redirect()->route('categories.index');
+        }
+
+        return redirect()->route('categories.edit', ['id' => $id]);
+    }
+
     public function destroy(int $id)
     {
         $response = Http::delete("nginx/api/categories/{$id}");

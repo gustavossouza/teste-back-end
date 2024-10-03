@@ -22,7 +22,7 @@ class GlobalServices
         return $this->repository->create($data);
     }
 
-    public function update(int $id, array $data): ?Model
+    public function update(array $data, int $id): ?Model
     {
         return $this->repository->update($id, $data);
     }

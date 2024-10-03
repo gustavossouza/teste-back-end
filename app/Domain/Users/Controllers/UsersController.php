@@ -86,8 +86,33 @@ class UsersController extends Controller
     public function update(Request $request, int $categoryId): JsonResponse
     {
         try {
+            $request->validate([
+                'name' => 'required',
+                'email' => 'required',
+                'cellphone' => 'required',
+                'password' => 'required',
+            ]);
+
+            $duplicate = $this->service->isDuplicate([
+                'email' => $request->email
+            ]);
+            if ($duplicate) {
+                throw new \Exception('Este email já está em uso. Por favor, escolha um nome diferente.');
+            }
+
+            $request->merge([
+                'password' => Hash::make($request->password)
+            ]);
+
+            $this->service->update($request->only([
+                'name',
+                'email',
+                'cellphone',
+                'password',
+            ]), $userId);
+
             return response()->json([
-                'data' => $this->service->get()
+                'data' => 'Updated'
             ], Response::HTTP_OK);
             
         } catch (\Exception $e) {

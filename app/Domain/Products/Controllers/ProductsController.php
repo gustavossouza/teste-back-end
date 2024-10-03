@@ -82,8 +82,30 @@ class ProductsController extends Controller
     public function update(Request $request, int $productId): JsonResponse
     {
         try {
+            $request->validate([
+                'name' => 'required',
+                'price' => 'required|numeric',
+                'description' => 'required|string',
+                'category_id' => 'required|exists:categories,id',
+            ]);
+            $name = $request->name;
+            $duplicate = $this->service->isDuplicate([
+                'name' => $name
+            ]);
+            if ($duplicate) {
+                throw new \Exception('Este nome já está em uso. Por favor, escolha um nome diferente.');
+            }
+
+            $this->service->update($request->only([
+                'name',
+                'price',
+                'description',
+                'category_id',
+                'image_url',
+            ]), $productId);
+
             return response()->json([
-                'data' => $this->service->get()
+                'data' => 'Updated'
             ], Response::HTTP_OK);
             
         } catch (\Exception $e) {

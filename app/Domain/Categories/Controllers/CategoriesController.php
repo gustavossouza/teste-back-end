@@ -75,8 +75,23 @@ class CategoriesController extends Controller
     public function update(Request $request, int $categoryId): JsonResponse
     {
         try {
+            $request->validate([
+                'name' => 'required'
+            ]);
+            $name = $request->name;
+            $duplicate = $this->service->isDuplicate([
+                'name' => $name
+            ]);
+            if ($duplicate) {
+                throw new \Exception('Este nome já está em uso. Por favor, escolha um nome diferente.');
+            }
+
+            $this->service->update($request->only([
+                'name'
+            ]), $categoryId);
+
             return response()->json([
-                'data' => $this->service->get()
+                'data' => 'Updated'
             ], Response::HTTP_OK);
             
         } catch (\Exception $e) {

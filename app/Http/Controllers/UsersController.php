@@ -62,6 +62,40 @@ class UsersController extends Controller
         return view('users.edit')->with('error', 'Falha ao carregar dados do usuário.');
     }
 
+    public function update(Request $request, int $id)
+    {
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|max:255',
+            'cellphone' => 'required|string|max:255',
+            'password' => 'required|string|max:255',
+        ]);
+
+        $name = $validatedData['name'];
+        $price = $validatedData['price'];
+        $description = $validatedData['description'];
+        $category_id = $validatedData['category_id'];
+        $image_url = $validatedData['image_url']??null;
+
+        $name = $validatedData['name'];
+        $email = $validatedData['email'];
+        $cellphone = $validatedData['cellphone'];
+        $password = $validatedData['password'];
+
+        $response = Http::put("nginx/api/users/{$id}", [
+            'name' => $name,
+            'email' => $email,
+            'cellphone' => $cellphone,
+            'password' => $password,
+        ]);
+
+        if ($response->successful()) {
+            return redirect()->route('users.index');
+        }
+
+        return redirect()->route('users.edit', ['id' => $id]);
+    }
+
     public function destroy(int $id)
     {
         $response = Http::delete("nginx/api/users/{$id}");
