@@ -37,6 +37,10 @@ Certifique-se de ter o **Docker** e o **Docker Compose** instalados em sua máqu
 
 ## Como Rodar o Projeto
 
+### OPS*
+
+Não coloquei, mensagem de erro. Lembrando, quando ele voltar para a mesma tela, significa que deu algo errado (alguns dados duplicados ou outros problemas).
+
 ### 1. Clonando o Repositório
 
 No terminal, vá até o diretório onde deseja clonar o projeto e execute:
