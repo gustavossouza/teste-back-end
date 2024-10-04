@@ -25,8 +25,8 @@ class ProductsService extends GlobalServices
             $query->where('id', $filters['product_id']);
         }
 
-        if (isset($filters['name'])) {
-            $query->where('name', 'like', '%' . $filters['name'] . '%');
+        if (isset($filters['title'])) {
+            $query->where('title', 'like', '%' . $filters['title'] . '%');
         }
 
         if (isset($filters['category'])) {
@@ -68,6 +68,7 @@ class ProductsService extends GlobalServices
             try {
                 $category = $this->categoriesService->findOrCreateByName($product['category']);
                 $product['category_id'] = $category->id;
+                unset($product['id']);
                 $this->create($product);
 
             } catch (\Exception $e) {
