@@ -195,9 +195,9 @@
         <!-- Campo Nome -->
         <div class="col-md-3">
             <div class="form-group">
-                <label for="name">Nome</label>
-                <input type="text" name="name" id="name" class="form-control" 
-                       placeholder="Digite o nome do produto" value="{{ request('name') }}">
+                <label for="name">Titutlo</label>
+                <input type="text" name="titulo" id="titulo" class="form-control" 
+                       placeholder="Digite o nome do produto" value="{{ request('titulo') }}">
             </div>
         </div>
 
@@ -249,7 +249,7 @@
                                     <thead>
                                         <tr>
                                             <th>ID</th>
-                                            <th>Name</th>
+                                            <th>Titulo</th>
                                             <th>Price</th>
                                             <th>Description</th>
                                             <th>Category</th>
@@ -260,7 +260,7 @@
                                     <tfoot>
                                         <tr>
                                             <th>ID</th>
-                                            <th>Name</th>
+                                            <th>Titulo</th>
                                             <th>Price</th>
                                             <th>Description</th>
                                             <th>Category</th>
@@ -272,7 +272,7 @@
                                         @foreach($products as $product)
                                         <tr>
                                             <td>{{$product['id']}}</td>
-                                            <td>{{$product['name']}}</td>
+                                            <td>{{$product['title']}}</td>
                                             <td>{{$product['price']}}</td>
                                             <td>{{$product['description']}}</td>
                                             <td>{{$product['category_id']}}</td>

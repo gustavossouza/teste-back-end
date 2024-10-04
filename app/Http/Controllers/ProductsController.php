@@ -34,20 +34,20 @@ class ProductsController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'name' => 'required|string|max:255',
+            'title' => 'required|string|max:255',
             'price' => 'required|numeric',
             'description' => 'required|string|max:255',
             'category_id' => 'required',
         ]);
 
-        $name = $validatedData['name'];
+        $title = $validatedData['title'];
         $price = $validatedData['price'];
         $description = $validatedData['description'];
         $category_id = $validatedData['category_id'];
         $image_url = $validatedData['image_url']??null;
 
         $response = Http::post('nginx/api/products', [
-            'name' => $name,
+            'title' => $title,
             'price' => $price,
             'description' => $description,
             'category_id' => $category_id,
@@ -77,20 +77,20 @@ class ProductsController extends Controller
     public function update(Request $request, int $id)
     {
         $validatedData = $request->validate([
-            'name' => 'required|string|max:255',
+            'title' => 'required|string|max:255',
             'price' => 'required|numeric',
             'description' => 'required|string|max:255',
             'category_id' => 'required',
         ]);
 
-        $name = $validatedData['name'];
+        $title = $validatedData['title'];
         $price = $validatedData['price'];
         $description = $validatedData['description'];
         $category_id = $validatedData['category_id'];
         $image_url = $validatedData['image_url']??null;
 
-        $response = Http::put('nginx/api/products', [
-            'name' => $name,
+        $response = Http::put("nginx/api/products/{$id}", [
+            'title' => $title,
             'price' => $price,
             'description' => $description,
             'category_id' => $category_id,

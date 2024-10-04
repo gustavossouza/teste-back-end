@@ -329,7 +329,7 @@
                         <!-- Campo Nome -->
                         <div class="form-group">
                             <label for="name">Nome</label>
-                            <input type="text" class="form-control" value="{{$product['name']??''}}" id="name" name="name" placeholder="Digite o nome" required>
+                            <input type="text" class="form-control" value="{{$product['title']??''}}" id="title" name="title" placeholder="Digite o nome" required>
                         </div>
                         
                         <div class="form-group">

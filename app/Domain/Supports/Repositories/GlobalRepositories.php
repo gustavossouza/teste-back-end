@@ -60,6 +60,11 @@ class GlobalRepositories
         return $model;
     }
 
+    public function count(): int
+    {
+        return $this->entity->count();
+    }
+
     public function hasDuplicateInColumn(array $columnsValue, ?int $excludeId = null): bool
     {
         $query = $this->entity->where($columnsValue);

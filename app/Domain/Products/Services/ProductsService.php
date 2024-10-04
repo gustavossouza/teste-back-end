@@ -55,7 +55,7 @@ class ProductsService extends GlobalServices
 
     public function update(array $data, int $productId): Products
     {
-        if ($this->isDuplicate(['title' => $data['title']])) {
+        if ($this->isDuplicate(['title' => $data['title']], $productId)) {
             throw new \Exception('Este nome já está em uso.');
         }
 

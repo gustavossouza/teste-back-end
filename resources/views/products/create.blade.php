@@ -328,8 +328,8 @@
                         @csrf
                         <!-- Campo Nome -->
                         <div class="form-group">
-                            <label for="name">Nome</label>
-                            <input type="text" class="form-control" id="name" name="name" placeholder="Digite o nome" required>
+                            <label for="name">Titulo</label>
+                            <input type="text" class="form-control" id="title" name="title" placeholder="Digite o nome" required>
                         </div>
                         
                         <div class="form-group">

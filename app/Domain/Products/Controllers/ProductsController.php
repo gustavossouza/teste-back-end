@@ -7,7 +7,7 @@ use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
 use App\Domain\Products\Services\ProductsService;
 use Illuminate\Http\JsonResponse;
-use App\Domain\Products\Formrequest\ProductsRequest;
+use App\Domain\Products\FormRequest\ProductsRequest;
 
 class ProductsController extends Controller
 {

@@ -1,20 +1,19 @@
 <?php
 
-namespace App\Domain\Categories\Formrequest;
+namespace App\Domain\Products\FormRequest;
 
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Validation\ValidationException;
+use App\Domain\Products\Services\ProductsService;
 use Illuminate\Foundation\Http\FormRequest;
 
-class CategoriesRequest extends FormRequest
+class ProductsRequest extends FormRequest
 {
     public function __construct(
-        protected UsersService $service
+        protected ProductsService $service
     )
-    {
-        $this->service = $service;
-    }
+    {}
 
     public function authorize()
     {
@@ -24,11 +23,11 @@ class CategoriesRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => ['required',
+            'title' => ['required',
             function ($attribute, $value, $fail) {
-                $isDuplicate = $this->service->isDuplicate(['name' => $value], $this->route('productId'));
+                $isDuplicate = $this->service->isDuplicate(['title' => $value], $this->route('productId'));
                 if ($isDuplicate) {
-                    $fail('Este email já está em uso. Por favor, escolha um diferente.');
+                    $fail('Este nome já está em uso. Por favor, escolha um diferente.');
                 }
             }],
             'price' => 'required|numeric',
@@ -40,7 +39,7 @@ class CategoriesRequest extends FormRequest
     public function messages()
     {
         return [
-            'name.required' => 'Este nome é obrigatório',
+            'title.required' => 'Este nome é obrigatório',
         ];
     }
 

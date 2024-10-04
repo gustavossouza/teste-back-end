@@ -32,9 +32,14 @@ class GlobalServices
         return $this->repository->delete($id);
     }
 
+    public function count(): int
+    {
+        return $this->repository->count();
+    }
+
     public function isDuplicate(array $columnsValue, ?int $excludeId = null): bool
     {
         return $this->repository
-            ->hasDuplicateInColumn($columnsValue);
+            ->hasDuplicateInColumn($columnsValue, $excludeId);
     }
 }

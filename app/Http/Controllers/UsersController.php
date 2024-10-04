@@ -72,12 +72,6 @@ class UsersController extends Controller
         ]);
 
         $name = $validatedData['name'];
-        $price = $validatedData['price'];
-        $description = $validatedData['description'];
-        $category_id = $validatedData['category_id'];
-        $image_url = $validatedData['image_url']??null;
-
-        $name = $validatedData['name'];
         $email = $validatedData['email'];
         $cellphone = $validatedData['cellphone'];
         $password = $validatedData['password'];

@@ -175,6 +175,7 @@ return [
         App\Domain\Login\Providers\RouteServiceProvider::class,
         App\Domain\Products\Providers\RouteServiceProvider::class,
         App\Domain\Users\Providers\RouteServiceProvider::class,
+        App\Domain\Dashboard\Providers\RouteServiceProvider::class,
 
 
 

@@ -181,7 +181,7 @@
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                                 Quantidade Produtos</div>
-                                                <div class="h5 mb-0 font-weight-bold text-gray-800">18</div>
+                                                <div class="h5 mb-0 font-weight-bold text-gray-800">{{$dashboard['quantity_products']}}</div>
                                         </div>
                                     </div>
                                 </div>
@@ -196,7 +196,7 @@
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                                                 Quantidade Categorias</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">18</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{$dashboard['quantity_categories']}}</div>
                                         </div>
                                     </div>
                                 </div>
@@ -211,7 +211,7 @@
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
                                                 Quantidade Usuários</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">18</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{$dashboard['quantity_users']}}</div>
                                         </div>
                                     </div>
                                 </div>

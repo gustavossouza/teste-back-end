@@ -54,6 +54,7 @@ Inicie os contêineres:
 
 ```bash
 docker-compose up -d
+docker-compose run app bash
 ```
 
 ### 3. Instalar Dependências
