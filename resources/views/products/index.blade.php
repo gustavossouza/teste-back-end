@@ -196,8 +196,8 @@
         <div class="col-md-3">
             <div class="form-group">
                 <label for="name">Titutlo</label>
-                <input type="text" name="titulo" id="titulo" class="form-control" 
-                       placeholder="Digite o nome do produto" value="{{ request('titulo') }}">
+                <input type="text" name="title" id="titulo" class="form-control" 
+                       placeholder="Digite o nome do produto" value="{{ request('title') }}">
             </div>
         </div>
 
@@ -249,7 +249,7 @@
                                     <thead>
                                         <tr>
                                             <th>ID</th>
-                                            <th>Titulo</th>
+                                            <th>Title</th>
                                             <th>Price</th>
                                             <th>Description</th>
                                             <th>Category</th>
@@ -260,7 +260,7 @@
                                     <tfoot>
                                         <tr>
                                             <th>ID</th>
-                                            <th>Titulo</th>
+                                            <th>Title</th>
                                             <th>Price</th>
                                             <th>Description</th>
                                             <th>Category</th>
